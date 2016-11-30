@@ -1,41 +1,31 @@
 public class CharByteConverter {
-    static byte[] CharToBytes(char arg)
-    {
-        //byte -128..127   char 0..65535
-        byte[] answer = new byte[2];
-        answer[0] = (byte)(arg / 256 - 128);
-        answer[1] = (byte)(arg % 256 - 128) ;
-        System.out.print(answer[0] + " " + answer[1] + "\n");
-        return answer;
-    }
-    static char BytesToChar(byte[] arg)
-    {
-        char answer = (char)(256 * (arg[0] + 128) + (arg[1] + 128));
-        System.out.print((int)answer + "\n");
-        return answer;
-    }
 
-    static char[] BytesArrayToCharArray(byte[] arg)
+    static char[] bytesArrayToCharArray(byte[] arg)
     {
-        if (arg.length % 2 !=0)
+        if (arg.length % 2 !=0 || arg.length == 0)
         {
             System.out.print("wrong byte array length, cant convert");
             return null;
         }
         char[] answer = new char[arg.length / 2];
         for (int i = 0; i < answer.length; i++)
-            answer[i] = BytesToChar(new byte[]{arg[2 * i], arg[2 * i + 1]});
+            answer[i] = (char)(256 * (arg[2 * i] + 128) + (arg[2 * i + 1] + 128));
+
         return answer;
     }
 
-    static byte[] CharArrayToBytesArray(char[] arg)
+    static byte[] charArrayToBytesArray(char[] arg)
     {
+        if (arg.length == 0)
+        {
+            System.out.print("wrong byte array length, cant convert");
+            return null;
+        }
         byte[] answer = new byte[2 * arg.length];
         for (int i = 0; i < arg.length; i++)
         {
-            byte[]temp = CharToBytes(arg[i]);
-            answer[2 * i] = temp[0];
-            answer[2 * i + 1] = temp[1];
+            answer[2 * i] = (byte)(arg[i] / 256 - 128);
+            answer[2 * i + 1] = (byte)(arg[i] % 256 - 128);
         }
         return answer;
     }
