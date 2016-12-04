@@ -1,0 +1,29 @@
+public class CharByteConverter {
+
+    static char[] bytesArrayToCharArray(byte[] arg)
+    {
+        if (arg == null)
+            throw new NullPointerException("null byte[] argument");
+        if (arg.length % 2 !=0 || arg.length == 0)
+            throw new RuntimeException("wrong array length");
+        char[] answer = new char[arg.length / 2];
+        for (int i = 0; i < answer.length; i++)
+            answer[i] = (char)(256 * (arg[2 * i] + 128) + (arg[2 * i + 1] + 128));
+        return answer;
+    }
+
+    static byte[] charArrayToBytesArray(char[] arg)
+    {
+        if (arg == null)
+            throw new NullPointerException("null char[] argument");
+        if (arg.length == 0)
+            throw new RuntimeException("zero array length");
+        byte[] answer = new byte[2 * arg.length];
+        for (int i = 0; i < arg.length; i++)
+        {
+            answer[2 * i] = (byte)(arg[i] / 256 - 128);
+            answer[2 * i + 1] = (byte)(arg[i] % 256 - 128);
+        }
+        return answer;
+    }
+}
